@@ -1,6 +1,7 @@
 # DexKit Trading Bot (Work in Progress)
 
 This bot generates volume in decentralized exchanges using ZRX API or could be used by users to accumulate one side or sell one side during a defined time similar to a DCA strategy.
+
 Also is a showcase how to do swaps programmatically.
 
 # How to start
