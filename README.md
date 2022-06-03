@@ -4,6 +4,10 @@ This bot generates volume in decentralized exchanges using ZRX API or could be u
 
 Also is a showcase how to do swaps programmatically.
 
+# Supported Chains
+
+Mumbai, Polygon and BSC
+
 # How to start
 
 clone this repo and then:
@@ -33,10 +37,11 @@ Now you can start configure the Bot to do random trades and generate volume to f
     minIntervalSeconds: number;
     maxIntervalSeconds: number;
     accountIndex?: number;
+    slippagePercentage?: number;
 
 ```
 
-where baseTokenAddress is your base token address, for instance KIT, and quoteTokenAddress is your quote token address as for instance USDC. maxSellUnit is the max amount in quote units that you want your bot to sell and being the minSellUnit, the minimum amount, please note sell amount generated it will be between max and min sell amounts. maxBuyUnit is the max amount in quote units that you want your bot to buy and being the minBuyUnit, the minimum amount, please note buy amount generated it will be between max and min sell amounts. Finally, you can also configure the trading frequency using minIntervalSeconds and maxIntervalSeconds.
+where baseTokenAddress is your base token address, for instance KIT, and quoteTokenAddress is your quote token address as for instance USDC. maxSellUnit is the max amount in quote units that you want your bot to sell and being the minSellUnit, the minimum amount, please note sell amount generated it will be between max and min sell amounts. maxBuyUnit is the max amount in quote units that you want your bot to buy and being the minBuyUnit, the minimum amount, please note buy amount generated it will be between max and min sell amounts. You can configure the trading frequency using minIntervalSeconds and maxIntervalSeconds, and finally add slippagePercentage that bot will use this could be a value between 0.005 (0.5%) and 0.2 (20%);
 
 For Bot works well the token needs to have available liquidity on decentralized exchanges as for instance Uniswap.
 
@@ -49,9 +54,10 @@ We recommend add a USDC market to make it easy to configure the bot. An example 
     minBuyUnit: 3
     minIntervalSeconds: 300
     maxIntervalSeconds: 600
+    slippagePercentage: 0.01
 ```
 
-Bot will perform a trade between 5 to 10 minutes worth at medium 7 usd dollares, with this amount it can generate, medium 5 to 10 trades per hour which gives us around 50 dollares per hour, in a day it will be around 1000 usd. This is just an example, bot could be tunned to give more volume, but is recommended not add much volume than necessary, 1000 USD is already enough to be listed on most trackers and keep always your token up to date in terms of pricing.
+Bot will perform a trade between 5 to 10 minutes worth at medium 7 usd dollares, with this amount it can generate, medium 5 to 10 trades per hour which gives us around 50 dollares per hour, in a day it will be around 1000 usd. Bot in each trade will accept a max 1% slippage on the trade. This is just an example, bot could be tunned to give more volume, but is recommended not add much volume than necessary, 1000 USD is already enough to be listed on most trackers and keep always your token up to date in terms of pricing.
 
 Now before run the bot you need to send native coin to pay gas, and base and quote tokens to the bot. We recommend around 3 to 5 times the maxAmounts defined in each side.
 

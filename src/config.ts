@@ -10,7 +10,7 @@ export const Markets: MarketConfig[] = [
         minBuyUnit: 3,
         minSellUnit: 3,
         maxSellUnit: 8,
-        minIntervalSeconds: 60 * 2,
-        maxIntervalSeconds: 60 * 5,
+        minIntervalSeconds: 60 * 10,
+        maxIntervalSeconds: 60 * 20,
     }
 ]

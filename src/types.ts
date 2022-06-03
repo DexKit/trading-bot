@@ -6,6 +6,7 @@ export interface QuoteParams {
     sellToken: string;
     sellAmount?: string;
     buyAmount?: string;
+    slippagePercentage?: number;
     takerAddress: string;
     intentOnFill: boolean;
 }
@@ -32,6 +33,7 @@ export interface MarketConfig {
     minIntervalSeconds: number;
     maxIntervalSeconds: number;
     accountIndex?: number;
+    slippagePercentage?: number;
 }
 
 export interface MarketData {
@@ -45,4 +47,5 @@ export interface MarketData {
     minIntervalSeconds: number;
     maxIntervalSeconds: number;
     accountIndex?: number;
+    slippagePercentage?: number;
 }
