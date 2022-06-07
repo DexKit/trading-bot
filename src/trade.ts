@@ -31,18 +31,19 @@ export const executeTrade = async (market: MarketData) => {
             const sellAmount = parseUnits(randomBuyAmount.toFixed(6), market.quoteTokenBalance.token.decimals).toString();
             if (Number(randomBuyAmount) > market.minBuyUnit) {
                 const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, takerAddress, intentOnFill: true, slippagePercentage }, market.chainId);
-                console.log(`bot doing a buy worth of ${randomBuyAmount}`);
+
                 if (!IS_SIMULATION) {
                     const { data, to, value, gas, gasPrice } = quote.data;
-                    const tx = await signer.sendTransaction({ data, to, value, gasLimit: gas, gasPrice });
+                    const tx = await signer.sendTransaction({ data, to, value: BigNumber.from(value).toHexString(), gasLimit: BigNumber.from(gas).toHexString(), gasPrice: BigNumber.from(gasPrice).toHexString() });
                     await tx.wait();
                 }
 
             } else {
                 console.log('minimum amount to buy not reach, please add more quote Tokens to Bot')
             }
-        } catch {
-            console.log('error processing a buy')
+        } catch (e) {
+            console.log(e);
+            console.log('error processing a buy');
         }
 
 
@@ -68,7 +69,7 @@ export const executeTrade = async (market: MarketData) => {
                 const quote = await getSwapQuote({ buyAmount, sellToken, buyToken, takerAddress, intentOnFill: true, slippagePercentage }, market.chainId);
                 if (!IS_SIMULATION) {
                     const { data, to, value, gas, gasPrice } = quote.data;
-                    const tx = await signer.sendTransaction({ data, to, value, gasLimit: gas, gasPrice });
+                    const tx = await signer.sendTransaction({ data, to, value: BigNumber.from(value).toHexString(), gasLimit: BigNumber.from(gas).toHexString(), gasPrice: BigNumber.from(gasPrice).toHexString() });
                     await tx.wait();
                 }
 
