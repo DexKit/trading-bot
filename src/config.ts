@@ -12,5 +12,6 @@ export const Markets: MarketConfig[] = [
         maxSellUnit: 25,
         minIntervalSeconds: 60 * 5,
         maxIntervalSeconds: 60 * 10,
+        maxGasValueInGwei: 50
     }
 ]

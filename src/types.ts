@@ -34,6 +34,7 @@ export interface MarketConfig {
     maxIntervalSeconds: number;
     accountIndex?: number;
     slippagePercentage?: number;
+    maxGasValueInGwei?: number;
 }
 
 export interface MarketData {
@@ -48,4 +49,5 @@ export interface MarketData {
     maxIntervalSeconds: number;
     accountIndex?: number;
     slippagePercentage?: number;
+    maxGasValueInGwei?: number;
 }

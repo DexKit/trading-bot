@@ -1,4 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import { ethers } from "ethers";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { IS_SIMULATION } from "./constants";
 import { getSigner } from "./provider";
@@ -32,6 +33,14 @@ export const executeTrade = async (market: MarketData) => {
             if (Number(randomBuyAmount) > market.minBuyUnit) {
                 const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, takerAddress, intentOnFill: true, slippagePercentage }, market.chainId);
 
+                if (market.maxGasValueInGwei && quote.data.gasPrice) {
+                    const wei = ethers.utils.parseUnits(String(market.maxGasValueInGwei), 'gwei');
+                    if (BigNumber.from(quote.data.gasPrice).gte(wei)) {
+                        console.log(`gas higher than threshold: current gas: ${ethers.utils.formatUnits(quote.data.gasPrice, "gwei")} gwei`)
+                    }
+                }
+
+
                 if (!IS_SIMULATION) {
                     const { data, to, value, gas, gasPrice } = quote.data;
                     const tx = await signer.sendTransaction({ data, to, value: BigNumber.from(value).toHexString(), gasLimit: BigNumber.from(gas).toHexString(), gasPrice: BigNumber.from(gasPrice).toHexString() });
@@ -39,7 +48,7 @@ export const executeTrade = async (market: MarketData) => {
                 }
 
             } else {
-                console.log('minimum amount to buy not reach, please add more quote Tokens to Bot')
+                console.log('minimum amount to buy not reached, please add more quote Tokens to Bot')
             }
         } catch (e) {
             console.log(e);
@@ -60,13 +69,21 @@ export const executeTrade = async (market: MarketData) => {
             const buyAmount = parseUnits(randomSellAmount.toFixed(6), market.quoteTokenBalance.token.decimals).toString();
             const quote = await getSwapQuote({ buyAmount, sellToken, buyToken, takerAddress, intentOnFill: false, slippagePercentage }, market.chainId);
 
-
+            console.log(quote.data.gasPrice);
 
             if (BigNumber.from(quote.data.sellAmount).lt(market.baseTokenBalance.balance)) {
                 //const sellAmount = market.baseTokenBalance.balance.toString();
 
                 console.log(`bot doing a sell worth ${randomSellAmount}`);
                 const quote = await getSwapQuote({ buyAmount, sellToken, buyToken, takerAddress, intentOnFill: true, slippagePercentage }, market.chainId);
+                if (market.maxGasValueInGwei && quote.data.gasPrice) {
+                    const wei = ethers.utils.parseUnits(String(market.maxGasValueInGwei), 'gwei');
+                    if (BigNumber.from(quote.data.gasPrice).gte(wei)) {
+                        console.log(`gas higher than threshold: current gas: ${ethers.utils.formatUnits(quote.data.gasPrice, "gwei")} gwei`)
+                    }
+                }
+
+
                 if (!IS_SIMULATION) {
                     const { data, to, value, gas, gasPrice } = quote.data;
                     const tx = await signer.sendTransaction({ data, to, value: BigNumber.from(value).toHexString(), gasLimit: BigNumber.from(gas).toHexString(), gasPrice: BigNumber.from(gasPrice).toHexString() });
@@ -75,7 +92,7 @@ export const executeTrade = async (market: MarketData) => {
 
 
             } else {
-                console.log('minimum amount to sell  not reach, please add more base Tokens to Bot')
+                console.log('minimum amount to sell not reached, please add more base Tokens to Bot')
             }
         } catch (e) {
             console.log(e);
