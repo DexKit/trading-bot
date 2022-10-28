@@ -38,10 +38,11 @@ Now you can start configure the Bot to do random trades and generate volume to f
     maxIntervalSeconds: number;
     accountIndex?: number;
     slippagePercentage?: number;
+    maxGasValueInGwei?: number;
 
 ```
 
-where baseTokenAddress is your base token address, for instance KIT, and quoteTokenAddress is your quote token address as for instance USDC. maxSellUnit is the max amount in quote units that you want your bot to sell and being the minSellUnit, the minimum amount, please note sell amount generated it will be between max and min sell amounts. maxBuyUnit is the max amount in quote units that you want your bot to buy and being the minBuyUnit, the minimum amount, please note buy amount generated it will be between max and min sell amounts. You can configure the trading frequency using minIntervalSeconds and maxIntervalSeconds, and finally add slippagePercentage that bot will use this could be a value between 0.005 (0.5%) and 0.2 (20%);
+where baseTokenAddress is your base token address, for instance KIT, and quoteTokenAddress is your quote token address as for instance USDC. maxSellUnit is the max amount in quote units that you want your bot to sell and being the minSellUnit, the minimum amount, please note sell amount generated it will be between max and min sell amounts. maxBuyUnit is the max amount in quote units that you want your bot to buy and being the minBuyUnit, the minimum amount, please note buy amount generated it will be between max and min sell amounts. You can configure the trading frequency using minIntervalSeconds and maxIntervalSeconds, and finally add slippagePercentage that bot will use this could be a value between 0.005 (0.5%) and 0.2 (20%). The field maxGasValueInGwei is the max amount you are wiling to pay for gas to run the bot, this is usefell to not make the bot trade
 
 For Bot works well the token needs to have available liquidity on decentralized exchanges as for instance Uniswap.
 

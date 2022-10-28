@@ -22,13 +22,20 @@ export const JSON_RPC_PROVIDERS: {
     [ChainId.BSC]: bscProvider
 };
 
+const standardPath = "m/44'/60'/0'/0";
 
-export const getSigner = (chainId: ChainId) => {
+function generatePath(index: number = 0) {
+    const path = `${standardPath}/${index}`;
+    return path;
+}
+
+
+export const getSigner = (chainId: ChainId, index: number = 0) => {
 
     const provider = JSON_RPC_PROVIDERS[chainId];
     const menmonic = process.env.MENMONIC as string;
-
-    const signer = ethers.Wallet.fromMnemonic(menmonic).connect(provider);
+    const path = generatePath(index);
+    const signer = ethers.Wallet.fromMnemonic(menmonic, path).connect(provider);
     return signer;
 }
 
