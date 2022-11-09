@@ -16,8 +16,6 @@ export const executeTrade = async (market: MarketData) => {
     const takerAddress = await signer.getAddress();
     if (isBuy) {
         try {
-
-
             const sellToken = market.quoteTokenBalance.token.address;
             const buyToken = market.baseTokenBalance.token.address;
             const slippagePercentage = market.slippagePercentage;
@@ -37,6 +35,7 @@ export const executeTrade = async (market: MarketData) => {
                     const wei = ethers.utils.parseUnits(String(market.maxGasValueInGwei), 'gwei');
                     if (BigNumber.from(quote.data.gasPrice).gte(wei)) {
                         console.log(`gas higher than threshold: current gas: ${ethers.utils.formatUnits(quote.data.gasPrice, "gwei")} gwei`)
+                        return;
                     }
                 }
 
@@ -79,7 +78,8 @@ export const executeTrade = async (market: MarketData) => {
                 if (market.maxGasValueInGwei && quote.data.gasPrice) {
                     const wei = ethers.utils.parseUnits(String(market.maxGasValueInGwei), 'gwei');
                     if (BigNumber.from(quote.data.gasPrice).gte(wei)) {
-                        console.log(`gas higher than threshold: current gas: ${ethers.utils.formatUnits(quote.data.gasPrice, "gwei")} gwei`)
+                        console.log(`gas higher than threshold: current gas: ${ethers.utils.formatUnits(quote.data.gasPrice, "gwei")} gwei`);
+                        return;
                     }
                 }
 
