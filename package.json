@@ -1,6 +1,6 @@
 {
   "name": "trading-bot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Trading bot for decentralized exchanges",
   "main": "index.ts",
   "repository": "https://github.com/DexKit/trading-bot.git",
