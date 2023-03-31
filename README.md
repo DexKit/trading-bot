@@ -1,12 +1,10 @@
 # DexKit Trading Bot (Work in Progress)
 
-This bot generates volume in decentralized exchanges using ZRX API or could be used by users to accumulate one side or sell one side during a defined time similar to a DCA strategy.
-
-Also is a showcase how to do swaps programmatically.
+"This repository contains a bot that utilizes the ZRX API to generate volume on decentralized exchanges. It can also be used by users to accumulate or sell one side during a defined time period, similar to a Dollar Cost Averaging (DCA) strategy. Additionally, the repository serves as a showcase for programmatically executing swaps."
 
 # Supported Chains
 
-Mumbai, Polygon and BSC
+Polygon, BSC, Fantom, Avalanche, Arbitrum and Optimism
 
 # How to start
 
@@ -22,9 +20,9 @@ and add it on the .env file as follows:
 
 `MENMONIC= add_here_generated_menmonic`
 
-With a menmonic you can generate multiple accounts, please store it in a safe place before transfer any funds to it
+With a mnemonic, you can generate multiple accounts. Please store it in a safe place before transferring any funds to it.
 
-Now you can start configure the Bot to do random trades and generate volume to feed trackers continuosly. You need to configure the follow Market config:
+Now, you can start configuring the bot to do random trades and generate volume to continuously feed trackers. You need to configure the following market settings:
 
 ```
     baseTokenAddress: string;
@@ -42,11 +40,13 @@ Now you can start configure the Bot to do random trades and generate volume to f
 
 ```
 
-where baseTokenAddress is your base token address, for instance KIT, and quoteTokenAddress is your quote token address as for instance USDC. maxSellUnit is the max amount in quote units that you want your bot to sell and being the minSellUnit, the minimum amount, please note sell amount generated it will be between max and min sell amounts. maxBuyUnit is the max amount in quote units that you want your bot to buy and being the minBuyUnit, the minimum amount, please note buy amount generated it will be between max and min sell amounts. You can configure the trading frequency using minIntervalSeconds and maxIntervalSeconds, and finally add slippagePercentage that bot will use this could be a value between 0.005 (0.5%) and 0.2 (20%). The field maxGasValueInGwei is the max amount you are wiling to pay for gas to run the bot, this is usefell to not make the bot trade.
+The baseTokenAddress field represents your base token address, such as KIT, while quoteTokenAddress represents your quote token address, such as USDC. The maxSellUnit and minSellUnit fields represent the maximum and minimum amounts in quote units that you want your bot to sell, respectively. Please note that the sell amount generated will be between the maximum and minimum sell amounts. Similarly, the maxBuyUnit and minBuyUnit fields represent the maximum and minimum amounts in quote units that you want your bot to buy, respectively. Please note that the buy amount generated will be between the maximum and minimum sell amounts.
 
-For Bot works well the token needs to have available liquidity on decentralized exchanges as for instance Uniswap.
+You can configure the trading frequency using the minIntervalSeconds and maxIntervalSeconds fields. Additionally, you can add a slippagePercentage field, which the bot will use to determine slippage. This value can range between 0.005 (0.5%) and 0.2 (20%). The maxGasValueInGwei field represents the maximum amount you are willing to pay for gas to run the bot. This can be useful to avoid overtrading.
 
-We recommend add a USDC market to make it easy to configure the bot. An example that could generate around 1000 USDC volume daily is shown as follows:
+For the bot to work well, the token needs to have available liquidity on decentralized exchanges, such as Uniswap.
+
+We recommend adding a USDC market to make it easy to configure the bot. An example that could generate around $1000 USD volume daily is shown as follows:
 
 ```
     maxSellUnit: 10
@@ -58,12 +58,12 @@ We recommend add a USDC market to make it easy to configure the bot. An example 
     slippagePercentage: 0.01
 ```
 
-Bot will perform a trade between 5 to 10 minutes worth at medium 7 usd dollares, with this amount it can generate, medium 5 to 10 trades per hour which gives us around 50 dollares per hour, in a day it will be around 1000 usd. Bot in each trade will accept a max 1% slippage on the trade. This is just an example, bot could be tunned to give more volume, but is recommended not add much volume than necessary, 1000 USD is already enough to be listed on most trackers and keep always your token up to date in terms of pricing.
+The bot will perform a trade between 5 to 10 minutes worth at around $7 USD. With this amount, it can generate around 5 to 10 trades per hour, which gives us around $50 USD per hour. In a day, it will be around $1000 USD. The bot will accept a maximum of 1% slippage on each trade. This is just an example, and the bot could be tuned to give more volume, but it's recommended not to add more volume than necessary. $1000 USD is already enough to be listed on most trackers and keep your token's pricing up to date.
 
-Now before run the bot you need to send native coin to pay gas, and base and quote tokens to the bot. We recommend around 3 to 5 times the maxAmounts defined in each side.
+Now, before running the bot, you need to send native coin to pay for gas, and base and quote tokens to the bot. We recommend sending around 3 to 5 times the maxAmounts defined on each side.
 
-After configure the bot you can just run:
+After configuring the bot, you can simply run:
 
 `yarn start`
 
-and bot will run till be out of gas.
+and the bot will run until it runs out of gas.

@@ -10,8 +10,6 @@ export const ZERO_EX_CHAIN_PREFIX = (chainId?: number) => {
             return 'polygon.';
         case ChainId.Celo:
             return 'celo.';
-        case ChainId.Ropsten:
-            return 'ropsten.';
         case ChainId.BSC:
             return 'bsc.';
         case ChainId.Avalanche:
@@ -20,6 +18,8 @@ export const ZERO_EX_CHAIN_PREFIX = (chainId?: number) => {
             return 'fantom.';
         case ChainId.Optimism:
             return 'optimism.';
+        case ChainId.Arbitrum:
+            return 'arbitrum.';
         default:
             throw new Error('Chain not supported')
     }

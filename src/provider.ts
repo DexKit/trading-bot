@@ -14,12 +14,36 @@ export const bscProvider = new ethers.providers.JsonRpcProvider(
     'https://bsc-dataseed.binance.org/', ChainId.BSC
 )
 
+export const arbitrumProvider = new ethers.providers.JsonRpcProvider(
+    'https://arbitrum-one.public.blastapi.io', ChainId.Arbitrum
+)
+
+export const optimismProvider = new ethers.providers.JsonRpcProvider(
+    'https://mainnet.optimism.io', ChainId.Optimism
+)
+export const fantomProvider = new ethers.providers.JsonRpcProvider(
+    'https://rpc.ftm.tools', ChainId.Fantom
+)
+
+export const avalancheProvider = new ethers.providers.JsonRpcProvider(
+    'https://avalanche.public-rpc.com', ChainId.Avalanche
+)
+
+export const ethProvider = new ethers.providers.JsonRpcProvider(
+    'https://eth.llamarpc.com', ChainId.Mainnet
+)
+
+
 export const JSON_RPC_PROVIDERS: {
     [key: number]: ethers.providers.JsonRpcProvider;
 } = {
-    [ChainId.Ropsten]: ropstenProvider,
     [ChainId.Polygon]: polygonProvider,
-    [ChainId.BSC]: bscProvider
+    [ChainId.BSC]: bscProvider,
+    [ChainId.Arbitrum]: arbitrumProvider,
+    [ChainId.Optimism]: optimismProvider,
+    [ChainId.Fantom]: fantomProvider,
+    [ChainId.Avalanche]: avalancheProvider,
+    [ChainId.Mainnet]: ethProvider,
 };
 
 const standardPath = "m/44'/60'/0'/0";
