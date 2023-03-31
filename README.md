@@ -1,6 +1,6 @@
 # DexKit Trading Bot (Work in Progress)
 
-"This repository contains a bot that utilizes the ZRX API to generate volume on decentralized exchanges. It can also be used by users to accumulate or sell one side during a defined time period, similar to a Dollar Cost Averaging (DCA) strategy. Additionally, the repository serves as a showcase for programmatically executing swaps."
+This repository contains a bot that utilizes the ZRX API to generate volume on decentralized exchanges. It can also be used by users to accumulate or sell one side during a defined time period, similar to a Dollar Cost Averaging (DCA) strategy. Additionally, the repository serves as a showcase for programmatically executing swaps.
 
 # Supported Chains
 
