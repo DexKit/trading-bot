@@ -4,7 +4,7 @@ import { getProvider, getSigner } from "./provider";
 import { ChainId, getContractAddressesForChainOrThrow } from '@0x/contract-addresses';
 import { MarketConfig, MarketData, Token } from "./types";
 import { ethers } from "ethers";
-import { ERC20Abi, IS_SIMULATION, MAX_ALLOWANCE, MINIMUM_ALLOWANCE_THRESHOLD } from "./constants";
+import { ERC20Abi, IS_SIMULATION, MAX_ALLOWANCE, MINIMUM_ALLOWANCE_THRESHOLD, V3_SWAP_ROUTER_ADDRESS } from "./constants";
 import { Interface } from "ethers/lib/utils";
 import { getGasEstimation } from "./gasEstimator";
 
@@ -23,8 +23,13 @@ export const prepare = async (marketConfig: MarketConfig): Promise<MarketData> =
     const owner = await signer.getAddress();
     console.log(`bot address is ${owner}`);
 
-
-    const spender = getContractAddressesForChainOrThrow(chainId).exchangeProxy;
+    let spender
+    if(marketConfig.tradeSource === 'UNIV3'){
+        spender = V3_SWAP_ROUTER_ADDRESS;
+    }else{
+        spender = getContractAddressesForChainOrThrow(chainId).exchangeProxy;
+    }
+    
 
     const tokens = [baseToken, quoteToken];
     console.log('fetching metadata');

@@ -1,6 +1,7 @@
 import { ChainId } from '@0x/contract-addresses';
 import { ethers } from 'ethers';
 
+export const CHAIN_ID_BASE = 8453;
 
 export const ropstenProvider = new ethers.providers.JsonRpcProvider(
     `https://ropsten.infura.io/v3/${process.env.ROPSTEN_ALCHEMY_KEY}`
@@ -33,6 +34,10 @@ export const ethProvider = new ethers.providers.JsonRpcProvider(
     'https://eth.llamarpc.com', ChainId.Mainnet
 )
 
+export const baseProvider = new ethers.providers.JsonRpcProvider(
+    'https://mainnet.base.org', CHAIN_ID_BASE
+)
+
 
 export const JSON_RPC_PROVIDERS: {
     [key: number]: ethers.providers.JsonRpcProvider;
@@ -44,6 +49,7 @@ export const JSON_RPC_PROVIDERS: {
     [ChainId.Fantom]: fantomProvider,
     [ChainId.Avalanche]: avalancheProvider,
     [ChainId.Mainnet]: ethProvider,
+    [CHAIN_ID_BASE]: baseProvider,
 };
 
 const standardPath = "m/44'/60'/0'/0";

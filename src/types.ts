@@ -35,6 +35,7 @@ export interface MarketConfig {
     accountIndex?: number;
     slippagePercentage?: number;
     maxGasValueInGwei?: number;
+    tradeSource: 'UNIV3' | 'ZRX_API'
 }
 
 export interface MarketData {
