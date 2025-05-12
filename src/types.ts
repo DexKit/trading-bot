@@ -7,7 +7,8 @@ export interface QuoteParams {
     sellAmount?: string;
     buyAmount?: string;
     slippagePercentage?: number;
-    takerAddress: string;
+    tradeSurplusRecipient?: string;
+    taker: string;
     intentOnFill: boolean;
 }
 

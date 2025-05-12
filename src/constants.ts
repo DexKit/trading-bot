@@ -26,8 +26,8 @@ export const ZERO_EX_CHAIN_PREFIX = (chainId?: number) => {
 };
 
 
-export const ZERO_EX_QUOTE_ENDPOINT = (chainId?: number) =>
-    `https://${ZERO_EX_CHAIN_PREFIX(chainId)}api.0x.org/swap/v1/quote`;
+export const ZERO_EX_QUOTE_ENDPOINT = () =>
+    `https://api.0x.org/swap/allowance-holder/quote`;
 
 
 export const ERC20Abi = [
