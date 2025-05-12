@@ -51,3 +51,6 @@ export const MINIMUM_ALLOWANCE_THRESHOLD = BigNumber.from(1000).mul(10).pow(18);
 export const MAX_ALLOWANCE = BigNumber.from(2).pow(256).sub(1);
 
 export const IS_SIMULATION = process.env.IS_SIMULATION === 'false' ? false : true;
+
+export const V3_SWAP_ROUTER_ADDRESS =
+  '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45'

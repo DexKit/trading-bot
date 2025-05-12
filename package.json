@@ -13,6 +13,10 @@
   "dependencies": {
     "@0x/contract-addresses": "^8.2.0",
     "@indexed-finance/multicall": "^2.0.0",
+    "@uniswap/sdk-core": "^7.7.2",
+    "@uniswap/smart-order-router": "^4.21.1",
+    "@uniswap/v3-sdk": "^3.25.2",
+    "@uniswap/v4-sdk": "^1.21.4",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
