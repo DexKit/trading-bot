@@ -4,7 +4,11 @@ This repository contains a bot that utilizes the ZRX API to generate volume on d
 
 # Supported Chains
 
-Polygon, BSC, Fantom, Avalanche, Arbitrum and Optimism
+Polygon, BSC, Fantom, Avalanche, Arbitrum, Optimism and Base
+
+# ZRX API KEY
+
+You need to get an API KEY at [dashboard](https://dashboard.0x.org) before you start.
 
 # How to start
 
