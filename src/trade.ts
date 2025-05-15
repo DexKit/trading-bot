@@ -4,7 +4,7 @@ import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { IS_SIMULATION } from "./constants";
 import { getSigner } from "./provider";
 import { MarketData } from "./types";
-import { getSwapQuote } from "./zerox_service";
+import { getSwapPrice, getSwapQuote } from "./zerox_service";
 import { getGasEstimation } from "./gasEstimator";
 import { setAllowanceToAllowanceHolder } from "./erc20";
 
@@ -31,7 +31,7 @@ export const executeTrade = async (market: MarketData) => {
             }
             const sellAmount = parseUnits(randomBuyAmount.toFixed(6), market.quoteTokenBalance.token.decimals).toString();
             if (Number(randomBuyAmount) > market.minBuyUnit) {
-                const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker, intentOnFill: true, slippagePercentage }, market.chainId);
+                const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker, slippagePercentage }, market.chainId);
 
                 if (market.maxGasValueInGwei && quote.data.gasPrice) {
                     const wei = ethers.utils.parseUnits(String(market.maxGasValueInGwei), 'gwei');
@@ -48,7 +48,7 @@ export const executeTrade = async (market: MarketData) => {
                 }
 
 
-                console.log(`doing a buy a amount of ${randomBuyAmount} base token`)
+                console.log(`doing a buy a amount of ${randomBuyAmount} quote token`)
 
 
                 if (!IS_SIMULATION) {
@@ -72,15 +72,29 @@ export const executeTrade = async (market: MarketData) => {
 
     } else {
         try {
-            const buyToken = market.baseTokenBalance.token.address;
-            const sellToken = market.quoteTokenBalance.token.address;
+            const buyToken = market.quoteTokenBalance.token.address;
+            const sellToken = market.baseTokenBalance.token.address;
             const slippagePercentage = market.slippagePercentage;
             let randomSellAmount = market.minSellUnit + market.maxSellUnit * Math.random();
             if (randomSellAmount > market.maxSellUnit) {
                 randomSellAmount = market.maxSellUnit;
             }
-            const sellAmount = parseUnits(randomSellAmount.toFixed(6), market.quoteTokenBalance.token.decimals).toString();
-            const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker, intentOnFill: false, slippagePercentage }, market.chainId);
+            const unitSellAmount = parseUnits('1', market.baseTokenBalance.token.decimals).toString();
+            console.log(unitSellAmount)
+            
+
+            // get price 
+            const price = (await getSwapPrice({sellAmount: unitSellAmount, sellToken, buyToken, taker,  slippagePercentage}, market.chainId)).data
+        
+            const buyAmountPriceUnits = formatUnits(price.buyAmount, market.quoteTokenBalance.token.decimals);
+            const sellAmountPriceUnits = formatUnits(price.sellAmount, market.baseTokenBalance.token.decimals);
+
+
+            const basePrice = Number(sellAmountPriceUnits)/Number(buyAmountPriceUnits);
+
+            const sellAmount = parseUnits((randomSellAmount*basePrice).toFixed(6), market.baseTokenBalance.token.decimals).toString();
+    
+            const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker,  slippagePercentage }, market.chainId);
 
     
 
@@ -88,7 +102,7 @@ export const executeTrade = async (market: MarketData) => {
                 //const sellAmount = market.baseTokenBalance.balance.toString();
 
                
-                const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker, intentOnFill: true, slippagePercentage }, market.chainId);
+               // const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker, slippagePercentage }, market.chainId);
                 if (market.maxGasValueInGwei && quote.data.gasPrice) {
                     const wei = ethers.utils.parseUnits(String(market.maxGasValueInGwei), 'gwei');
                     if (BigNumber.from(quote.data.gasPrice).gte(wei)) {
@@ -97,7 +111,8 @@ export const executeTrade = async (market: MarketData) => {
                     }
                 }
                
-                console.log(`doing a sell a amount of ${randomSellAmount} base token`)
+                console.log(`doing a sell a amount of ${randomSellAmount} quote token`)
+                console.log(quote.data?.issues?.allowance)
                 if(quote.data?.issues?.allowance){
                   console.log('setting allowance on sell token');
                    const {actual, spender} = quote.data.issues?.allowance;

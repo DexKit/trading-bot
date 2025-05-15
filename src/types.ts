@@ -9,7 +9,6 @@ export interface QuoteParams {
     slippagePercentage?: number;
     tradeSurplusRecipient?: string;
     taker: string;
-    intentOnFill: boolean;
 }
 
 export interface Token {
