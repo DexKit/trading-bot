@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/DexKit/trading-bot/compare/v1.1.0...v1.2.0) (2025-05-15)
+
+
+### Features
+
+* add logic to handle price ([c4d67be](https://github.com/DexKit/trading-bot/commit/c4d67be79e7e0ff6156b0f11ec254cc64b7a9d31))
+
+
+### Bug Fixes
+
+* set allowance to allowance holder ([edea72b](https://github.com/DexKit/trading-bot/commit/edea72b46d5ff100289e902f8ef0f34f383eaa99))
+
 ## [1.1.0](https://github.com/DexKit/trading-bot/compare/v1.0.0...v1.1.0) (2025-05-15)
 
 
