@@ -40,13 +40,12 @@ export const executeTrade = async (market: MarketData) => {
                     }
                 }
                 console.log(`doing a buy a amount of ${randomBuyAmount} base token`)
-              
 
 
                 if (!IS_SIMULATION) {
                     const gasEstimator = await getGasEstimation(market.chainId);
-                    const { data, to, value, gas, gasPrice } = quote.data;
-                    const tx = await signer.sendTransaction({ data, to, value, gasLimit: gas, gasPrice, ...gasEstimator });
+                    const { data, to, value, gas, gasPrice } = quote.data.transaction;
+                    const tx = await signer.sendTransaction({ data, to, value, ...gasEstimator });
                     console.log(`waiting buy trade to be validated onchain: `, tx)
                     await tx.wait();
                     console.log('buy trade validated onchain')
@@ -93,8 +92,8 @@ export const executeTrade = async (market: MarketData) => {
 
                 if (!IS_SIMULATION) {
                     const gasEstimator = await getGasEstimation(market.chainId);
-                    const { data, to, value, gas, gasPrice } = quote.data;
-                    const tx = await signer.sendTransaction({ data, to, value, gasLimit: gas, gasPrice, ...gasEstimator });
+                    const { data, to, value, gas, gasPrice } = quote.data.transaction;
+                    const tx = await signer.sendTransaction({ data, to, value, ...gasEstimator });
                     console.log(`waiting sell trade to be validated onchain:`, tx)
                     await tx.wait();
                     console.log('sell trade validated onchain')
