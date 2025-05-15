@@ -12,3 +12,4 @@ spec:
     - key: MENMONIC
       value: "test test test test test test test test test test test test"
       type: SECRET
+   run_command: yarn start
