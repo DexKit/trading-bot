@@ -11,4 +11,4 @@ spec:
       type: SECRET
     - key: MENMONIC
       value: "test test test test test test test test test test test test"
-      scope: SECRET
+      type: SECRET
