@@ -67,3 +67,11 @@ After configuring the bot, you can simply run:
 `yarn start`
 
 and the bot will run until it runs out of gas.
+
+# Deploying bot
+
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/DexKit/trading-bot/tree/main&refcode=88265690bc32)
+
+
+
+

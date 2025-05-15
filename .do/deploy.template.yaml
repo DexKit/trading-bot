@@ -1,0 +1,14 @@
+spec:
+ name: trading-bot
+ services:
+ - name: worker
+   git:
+     branch: main
+     repo_clone_url: https://github.com/DexKit/trading-bot.git
+   envs:
+    - key: ZRX_API_KEY
+      value: "get you api key at dashboard.0x.org"
+      type: SECRET
+    - key: MENMONIC
+      value: "test test test test test test test test test test test test"
+      scope: SECRET
