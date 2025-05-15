@@ -33,6 +33,10 @@ export const ethProvider = new ethers.providers.JsonRpcProvider(
     'https://eth.llamarpc.com', ChainId.Mainnet
 )
 
+export const baseProvider = new ethers.providers.JsonRpcProvider(
+    'https://mainnet.base.org', ChainId.Base
+)
+
 
 export const JSON_RPC_PROVIDERS: {
     [key: number]: ethers.providers.JsonRpcProvider;
@@ -44,6 +48,7 @@ export const JSON_RPC_PROVIDERS: {
     [ChainId.Fantom]: fantomProvider,
     [ChainId.Avalanche]: avalancheProvider,
     [ChainId.Mainnet]: ethProvider,
+    [ChainId.Base]: baseProvider,
 };
 
 const standardPath = "m/44'/60'/0'/0";

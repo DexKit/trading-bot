@@ -8,9 +8,9 @@ import { ethers } from "ethers";
 
 
 export const getGasEstimation = async (chainId: ChainId) => {
-
-    if (chainId === ChainId.Polygon) {
-        const gasEstimation = await (await axios.get('https://gasstation-mainnet.matic.network/v2')).data['fast'];
+    // Commented this due to problems with gas station
+   if (chainId === ChainId.Polygon) {
+        const gasEstimation = await (await axios.get('https://gasstation.polygon.technology/v2')).data['fast'];
         // solution presented at https://github.com/ethers-io/ethers.js/issues/2828
         const maxFeePerGas = ethers.utils.parseUnits(
             Math.ceil(gasEstimation.maxFee) + '',
