@@ -6,6 +6,7 @@ import { getSigner } from "./provider";
 import { MarketData } from "./types";
 import { getSwapQuote } from "./zerox_service";
 import { getGasEstimation } from "./gasEstimator";
+import { setAllowanceToAllowanceHolder } from "./erc20";
 
 
 
@@ -39,12 +40,20 @@ export const executeTrade = async (market: MarketData) => {
                         return;
                     }
                 }
+                
+                if(quote.data?.issues?.allowance){
+                    console.log('setting allowance on sell token');
+                   const {actual, spender} = quote.data.issues?.allowance;
+                   await setAllowanceToAllowanceHolder({actual, spender, chainId: market.chainId, baseToken: sellToken})
+                }
+
+
                 console.log(`doing a buy a amount of ${randomBuyAmount} base token`)
 
 
                 if (!IS_SIMULATION) {
                     const gasEstimator = await getGasEstimation(market.chainId);
-                    const { data, to, value, gas, gasPrice } = quote.data.transaction;
+                    const { data, to, value} = quote.data.transaction;
                     const tx = await signer.sendTransaction({ data, to, value, ...gasEstimator });
                     console.log(`waiting buy trade to be validated onchain: `, tx)
                     await tx.wait();
@@ -73,7 +82,7 @@ export const executeTrade = async (market: MarketData) => {
             const sellAmount = parseUnits(randomSellAmount.toFixed(6), market.quoteTokenBalance.token.decimals).toString();
             const quote = await getSwapQuote({ sellAmount, sellToken, buyToken, taker, intentOnFill: false, slippagePercentage }, market.chainId);
 
-            console.log(quote.data.gasPrice);
+    
 
             if (BigNumber.from(quote.data.sellAmount).lt(market.baseTokenBalance.balance)) {
                 //const sellAmount = market.baseTokenBalance.balance.toString();
@@ -87,12 +96,17 @@ export const executeTrade = async (market: MarketData) => {
                         return;
                     }
                 }
+               
                 console.log(`doing a sell a amount of ${randomSellAmount} base token`)
-            
+                if(quote.data?.issues?.allowance){
+                  console.log('setting allowance on sell token');
+                   const {actual, spender} = quote.data.issues?.allowance;
+                   await setAllowanceToAllowanceHolder({actual, spender, chainId: market.chainId, baseToken: sellToken})
+                }
 
                 if (!IS_SIMULATION) {
                     const gasEstimator = await getGasEstimation(market.chainId);
-                    const { data, to, value, gas, gasPrice } = quote.data.transaction;
+                    const { data, to, value  } = quote.data.transaction;
                     const tx = await signer.sendTransaction({ data, to, value, ...gasEstimator });
                     console.log(`waiting sell trade to be validated onchain:`, tx)
                     await tx.wait();

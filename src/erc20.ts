@@ -32,7 +32,7 @@ export const prepare = async (marketConfig: MarketConfig): Promise<MarketData> =
 
     const multi = new MultiCall(signer.provider);
 
-    const [blockNumber, balancesAndAllowances] = await multi.getBalancesAndAllowances(tokens, owner, spender)
+   const [blockNumber, balancesAndAllowances] = await multi.getBalancesAndAllowances(tokens, owner, spender)
 
     const {
         balance: quoteBalance,
@@ -42,7 +42,7 @@ export const prepare = async (marketConfig: MarketConfig): Promise<MarketData> =
 
 
 
-    if (quoteAllowance.lt(MINIMUM_ALLOWANCE_THRESHOLD)) {
+   /* if (quoteAllowance.lt(MINIMUM_ALLOWANCE_THRESHOLD)) {
         const tokenContract = new ethers.Contract(quoteToken, ERC20Abi, signer);
         console.log('Preparing allowance for quote token')
         if (!IS_SIMULATION) {
@@ -51,14 +51,14 @@ export const prepare = async (marketConfig: MarketConfig): Promise<MarketData> =
             const tx = await tokenContract.approve(spender, MAX_ALLOWANCE, gasEstimation);
             await tx.wait();
         }
-    }
+    }*/
 
     const {
         balance: baseBalance,
         allowance: baseAllowance
     } = balancesAndAllowances[baseToken];
 
-    if (baseAllowance.lt(MINIMUM_ALLOWANCE_THRESHOLD)) {
+   /* if (baseAllowance.lt(MINIMUM_ALLOWANCE_THRESHOLD)) {
         const tokenContract = new ethers.Contract(baseToken, ERC20Abi, signer);
         console.log('Preparing allowance for base token')
         if (!IS_SIMULATION) {
@@ -68,9 +68,8 @@ export const prepare = async (marketConfig: MarketConfig): Promise<MarketData> =
             await tx.wait();
         }
 
-    }
+    }*/
 
-    console.log('All allowances ok we are ready for trade');
 
     return {
         ...marketConfig,
@@ -82,6 +81,16 @@ export const prepare = async (marketConfig: MarketConfig): Promise<MarketData> =
             token: tokenMetadata[1],
             balance: quoteBalance
         },
+    }
+}
+
+export async function setAllowanceToAllowanceHolder({actual, spender, chainId, baseToken}: {actual: string, spender: string, chainId: number, baseToken: string}){
+    const signer = getSigner(chainId);
+    const tokenContract = new ethers.Contract(baseToken, ERC20Abi, signer);
+    if(Number(actual) === 0){
+         const gasEstimation = await getGasEstimation(chainId)
+         const tx = await tokenContract.approve(spender, MAX_ALLOWANCE, gasEstimation);
+         await tx.wait();
     }
 }
 
